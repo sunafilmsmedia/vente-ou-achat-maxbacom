@@ -56,9 +56,9 @@ export default function ExistingListingBlocker({ onWantsToSwitch, onCancel }: Pr
             inline-flex items-center justify-center gap-2
             px-6 py-3.5 rounded-full text-sm font-medium
             bg-gradient-to-b from-[var(--color-gold-soft)] to-[var(--color-gold)]
-            text-[#0a0a0a] font-semibold
-            shadow-[0_15px_40px_-10px_rgba(201,162,39,0.5)]
-            hover:shadow-[0_20px_50px_-10px_rgba(201,162,39,0.65)]
+            text-white font-semibold
+            shadow-[0_15px_40px_-10px_rgba(220,25,40,0.5)]
+            hover:shadow-[0_20px_50px_-10px_rgba(220,25,40,0.65)]
             transition-all
           "
         >

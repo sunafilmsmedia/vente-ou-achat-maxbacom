@@ -10,7 +10,6 @@ export type QuestionId =
   | "ownershipDuration"
   | "listingStatus"
   | "nextSectors"
-  | "nextBudget"
   | "preapprovalStatus"
   | "needsSaleMoney"
   | "canCarryTwoMortgages"
@@ -169,22 +168,6 @@ export const QUESTIONS: QuestionDef[] = [
     showIf: (a) => a.listingStatus !== "avec_courtier" || a.wantsToSwitchListing === true,
   },
   {
-    id: "nextBudget",
-    kind: "choice",
-    title: "Quel budget envisages-tu pour ta prochaine propriété ?",
-    autoAdvance: true,
-    choices: [
-      { value: "moins_400k", label: "Moins de 400 000 $" },
-      { value: "400_500k", label: "400 000 $ à 499 999 $" },
-      { value: "500_650k", label: "500 000 $ à 649 999 $" },
-      { value: "650_800k", label: "650 000 $ à 799 999 $" },
-      { value: "800_1m", label: "800 000 $ à 999 999 $" },
-      { value: "plus_1m", label: "1 000 000 $ et plus" },
-      { value: "ne_sais_pas", label: "Je ne connais pas encore mon budget" },
-    ],
-    showIf: (a) => a.listingStatus !== "avec_courtier" || a.wantsToSwitchListing === true,
-  },
-  {
     id: "preapprovalStatus",
     kind: "choice",
     title: "As-tu déjà obtenu une préapprobation hypothécaire pour ton prochain achat ?",
@@ -223,7 +206,12 @@ export const QUESTIONS: QuestionDef[] = [
       { value: "non", label: "Non" },
       { value: "ne_sais_pas", label: "Je ne sais pas" },
     ],
-    showIf: (a) => a.listingStatus !== "avec_courtier" || a.wantsToSwitchListing === true,
+    // Si la personne a déjà dit avoir ABSOLUMENT besoin de l'argent de la
+    // vente pour acheter, elle ne peut par définition pas porter deux
+    // propriétés — la question devient inutile.
+    showIf: (a) =>
+      (a.listingStatus !== "avec_courtier" || a.wantsToSwitchListing === true) &&
+      a.needsSaleMoney !== "oui_absolument",
   },
   {
     id: "hasSavings",
@@ -309,7 +297,6 @@ export function isAnswered(q: QuestionDef, a: Answers): boolean {
       if (a.listingStatus === "avec_courtier" && a.wantsToSwitchListing === true) return true;
       return false;
     case "nextSectors": return Array.isArray(a.nextSectors) && a.nextSectors.length >= 1;
-    case "nextBudget": return !!a.nextBudget;
     case "preapprovalStatus": return !!a.preapprovalStatus;
     case "needsSaleMoney": return !!a.needsSaleMoney;
     case "canCarryTwoMortgages": return !!a.canCarryTwoMortgages;

@@ -28,18 +28,18 @@ export default function ChoiceQuestion({ choices, value, onChange }: Props) {
               transition-all duration-200
               ${
                 selected
-                  ? "bg-gradient-to-br from-[var(--color-gold-soft)] to-[var(--color-gold)] border border-[var(--color-gold-soft)] shadow-[0_12px_30px_-10px_rgba(201,162,39,0.5)]"
-                  : "glass-card hover:border-[var(--color-slate-accent)]/40 hover:bg-black/[0.03]"
+                  ? "bg-gradient-to-br from-[var(--color-gold-soft)] to-[var(--color-gold)] border border-[var(--color-gold-soft)] shadow-[0_12px_30px_-10px_rgba(220,25,40,0.5)]"
+                  : "glass-card hover:border-[var(--color-slate-accent)]/40 hover:bg-white/[0.04]"
               }
             `}
           >
             <div className="flex items-center justify-between gap-4">
               <div className="min-w-0 flex-1">
-                <p className={`font-medium ${selected ? "text-[#0a0a0a]" : "text-[var(--color-brand-100)]"}`}>
+                <p className={`font-medium ${selected ? "text-white" : "text-[var(--color-brand-100)]"}`}>
                   {c.label}
                 </p>
                 {c.hint && (
-                  <p className={`text-xs mt-0.5 ${selected ? "text-[#0a0a0a]/70" : "text-slate-400"}`}>{c.hint}</p>
+                  <p className={`text-xs mt-0.5 ${selected ? "text-white/75" : "text-slate-400"}`}>{c.hint}</p>
                 )}
               </div>
               <span
@@ -47,7 +47,7 @@ export default function ChoiceQuestion({ choices, value, onChange }: Props) {
                   shrink-0 w-5 h-5 rounded-full border transition-all
                   ${
                     selected
-                      ? "bg-[#0a0a0a] border-[#0a0a0a] shadow-[0_0_10px_rgba(0,0,0,0.35)]"
+                      ? "bg-white border-white shadow-[0_0_10px_rgba(255,255,255,0.5)]"
                       : "border-[var(--color-slate-accent)]/35 group-hover:border-[var(--color-slate-accent)]/55"
                   }
                 `}

@@ -17,12 +17,12 @@ export default function ProgressBar({ current, total }: ProgressBarProps) {
         </span>
         <span className="text-[var(--color-gold)] font-medium">{Math.round(pct)} %</span>
       </div>
-      <div className="h-[3px] w-full rounded-full bg-black/10 overflow-hidden">
+      <div className="h-[3px] w-full rounded-full bg-white/10 overflow-hidden">
         <motion.div
           initial={false}
           animate={{ width: `${pct}%` }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="h-full rounded-full bg-gradient-to-r from-[var(--color-brand-400)] via-[var(--color-brand-300)] to-[var(--color-gold)]"
+          className="h-full rounded-full bg-gradient-to-r from-white/50 via-white/80 to-[var(--color-gold)]"
         />
       </div>
     </div>

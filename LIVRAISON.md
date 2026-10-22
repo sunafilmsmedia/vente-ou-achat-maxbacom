@@ -1,12 +1,10 @@
 # Vendre avant d'acheter… ou acheter avant de vendre ?
 
-App one-page de qualification de leads pour les courtiers immobiliers dont le
-client possède déjà une propriété et veut en changer. Clonée de l'architecture
+App one-page de qualification de leads pour **Max Bacon**, courtier immobilier
+résidentiel RE/MAX à Sainte-Julie (Montérégie). Clonée de l'architecture
 `vero-achat`. Next.js 15 (App Router, TS) · Tailwind v4 · Framer Motion ·
-déploiement Vercel. Thème noir / doré / blanc, mobile-first, français (tutoiement).
-
-**Générique pour l'instant** — pas encore assigné à un courtier précis (voir
-« Pour rebrander » ci-dessous).
+déploiement Vercel. Thème **bleu / blanc / rouge** (RE/MAX), mobile-first,
+français (tutoiement).
 
 ## Concept
 
@@ -20,7 +18,7 @@ l'équité accumulée et la priorité de la personne.
 
 ## Parcours (machine à états, un seul écran)
 
-`hero → formulaire (18 questions, 5 étapes) → chargement (~2 s, IA) → résultats`
+`hero → formulaire (16 à 17 questions selon le parcours, 5 étapes) → chargement (~2 s, IA) → résultats`
 
 - 5 étapes : Ton projet → Ta propriété actuelle → Ton prochain achat → Ta
   situation financière → Tes priorités, puis coordonnées (nom/courriel/tél.).
@@ -41,9 +39,10 @@ l'équité accumulée et la priorité de la personne.
 1. **`lib/brand.ts`** — LE fichier central : nom, région/ville, textes du
    hero, le ou les courtiers, logos.
 2. **`lib/regions.ts`** — la liste des villes/secteurs couverts (actuellement :
-   grandes villes du Québec génériques).
-3. **`public/`** — `logo-equipe.svg`, `logo-banniere.svg`, `broker-1.svg`
-   (placeholders génériques à remplacer par les vrais logos/photo).
+   Sainte-Julie et la Rive-Sud de Montréal, Montérégie).
+3. **`public/`** — `max-bacon-logo.png` (logo personnel), `remax-logo-white.png`
+   (logo RE/MAX officiel en blanc), `broker-1.svg` (placeholder photo courtier
+   — à remplacer par une vraie photo).
 4. **`.env.local`** (voir `.env.local.example`) — clés propres au déploiement :
    `ANTHROPIC_API_KEY`, `CRM_WEBHOOK_URL`, `NEXT_PUBLIC_SITE_URL`.
 

@@ -107,7 +107,6 @@ export async function POST(req: Request) {
     // Prochain achat
     secteursAchat: secteursAchat.join(", "),
     secteursAchatIds: answers.nextSectors ?? [],
-    nextBudget: answers.nextBudget ?? "",
     preapprovalStatus: answers.preapprovalStatus ?? "",
 
     // Situation financière

@@ -67,12 +67,12 @@ export default function RegionMultiSearch({ value, onChange, max = 1, placeholde
                 inline-flex items-center gap-2
                 rounded-full pl-4 pr-3 py-2 text-sm font-semibold
                 bg-gradient-to-br from-[var(--color-gold-soft)] to-[var(--color-gold)]
-                text-[#0a0a0a]
-                shadow-[0_10px_26px_-12px_rgba(201,162,39,0.55)]
+                text-white
+                shadow-[0_10px_26px_-12px_rgba(220,25,40,0.55)]
               "
             >
               {displayName(id)}
-              <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-black/20" aria-hidden>
+              <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-black/25" aria-hidden>
                 <svg className="w-2.5 h-2.5" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M3 3L9 9M9 3L3 9" strokeLinecap="round" />
                 </svg>
@@ -133,7 +133,7 @@ export default function RegionMultiSearch({ value, onChange, max = 1, placeholde
                 className="
                   w-full text-left glass-card rounded-xl px-4 py-3
                   flex items-center justify-between gap-3
-                  hover:bg-black/[0.04] hover:border-[var(--color-slate-accent)]/30
+                  hover:bg-white/[0.05] hover:border-[var(--color-slate-accent)]/30
                   transition-colors group
                 "
               >
@@ -157,7 +157,7 @@ export default function RegionMultiSearch({ value, onChange, max = 1, placeholde
               "
             >
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[var(--color-gold)] shrink-0">
-                <svg className="w-3.5 h-3.5 text-[#0a0a0a]" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.2">
+                <svg className="w-3.5 h-3.5 text-white" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.2">
                   <path d="M10 4v12M4 10h12" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </span>

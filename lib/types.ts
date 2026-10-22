@@ -64,15 +64,6 @@ export type ListingStatus =
   | "prete_pas_listee"
   | "aucune_demarche";
 
-export type BudgetRange =
-  | "moins_400k"
-  | "400_500k"
-  | "500_650k"
-  | "650_800k"
-  | "800_1m"
-  | "plus_1m"
-  | "ne_sais_pas";
-
 export type PreapprovalStatus =
   | "oui"
   | "non"
@@ -128,7 +119,6 @@ export interface Answers {
   // ── Étape 3 — Ton prochain achat ────────────────────────────────────────
   // Jusqu'à 3 secteurs.
   nextSectors?: string[];
-  nextBudget?: BudgetRange;
   preapprovalStatus?: PreapprovalStatus;
 
   // ── Étape 4 — Ta situation financière ───────────────────────────────────

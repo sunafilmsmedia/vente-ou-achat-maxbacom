@@ -37,16 +37,6 @@ const VALUE_RANGE_LABEL: Record<string, string> = {
   ne_sais_pas: "à confirmer",
 };
 
-const BUDGET_RANGE_LABEL: Record<string, string> = {
-  moins_400k: "moins de 400 000 $",
-  "400_500k": "entre 400 000 $ et 500 000 $",
-  "500_650k": "entre 500 000 $ et 650 000 $",
-  "650_800k": "entre 650 000 $ et 800 000 $",
-  "800_1m": "entre 800 000 $ et 1 000 000 $",
-  plus_1m: "1 000 000 $ et plus",
-  ne_sais_pas: "à déterminer",
-};
-
 export function regionNames(ids?: string[]): string[] {
   return (ids ?? []).map((id) => REGIONS.find((r) => r.id === id)?.name ?? id);
 }

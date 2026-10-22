@@ -30,7 +30,6 @@ const STEP_NAMES: Record<string, string> = {
   ownershipDuration: "anciennete_proprietaire",
   listingStatus: "statut_mise_en_vente",
   nextSectors: "secteurs_achat",
-  nextBudget: "budget_achat",
   preapprovalStatus: "preapprobation",
   needsSaleMoney: "besoin_argent_vente",
   canCarryTwoMortgages: "capacite_deux_hypotheques",
@@ -51,7 +50,6 @@ const CHOICE_FIELDS = new Set([
   "currentPropertyValue",
   "ownershipDuration",
   "listingStatus",
-  "nextBudget",
   "preapprovalStatus",
   "needsSaleMoney",
   "canCarryTwoMortgages",
@@ -217,9 +215,9 @@ export default function QualificationForm({ onComplete, onExit }: Props) {
                 inline-flex items-center gap-2
                 px-6 sm:px-8 py-3 rounded-full text-sm font-medium
                 bg-gradient-to-b from-[var(--color-gold-soft)] to-[var(--color-gold)]
-                text-[#0a0a0a] font-semibold
-                shadow-[0_15px_40px_-10px_rgba(201,162,39,0.55)]
-                hover:shadow-[0_20px_50px_-10px_rgba(201,162,39,0.7)]
+                text-white font-semibold
+                shadow-[0_15px_40px_-10px_rgba(220,25,40,0.55)]
+                hover:shadow-[0_20px_50px_-10px_rgba(220,25,40,0.7)]
                 disabled:opacity-50 disabled:cursor-not-allowed
                 transition-all
               "
@@ -237,9 +235,9 @@ export default function QualificationForm({ onComplete, onExit }: Props) {
               className="
                 inline-flex items-center gap-2
                 px-6 py-2.5 rounded-full text-sm font-medium
-                bg-black/[0.03] border border-[var(--color-slate-accent)]/25
+                bg-white/[0.06] border border-[var(--color-slate-accent)]/25
                 text-[var(--color-brand-100)]
-                hover:bg-black/[0.06] hover:border-[var(--color-slate-accent)]/40
+                hover:bg-white/[0.1] hover:border-[var(--color-slate-accent)]/40
                 disabled:opacity-40 disabled:cursor-not-allowed
                 transition-all
               "
@@ -350,14 +348,6 @@ function QuestionRenderer({ question, answers, onUpdate }: RendererProps) {
           placeholder={regionsPlaceholder}
           // Plusieurs secteurs possibles : avance manuelle (bouton "Suivant").
           onChange={(ids) => onUpdate({ nextSectors: ids }, false)}
-        />
-      );
-    case "nextBudget":
-      return (
-        <ChoiceQuestion
-          choices={choices!}
-          value={answers.nextBudget}
-          onChange={(v) => onUpdate({ nextBudget: v as Answers["nextBudget"] }, !!autoAdvance)}
         />
       );
     case "preapprovalStatus":

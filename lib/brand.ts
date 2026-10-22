@@ -4,10 +4,11 @@
 //  (+ lib/regions.ts pour la liste des secteurs, + les images dans /public,
 //   + les variables d'environnement : voir .env.local.example)
 //
-//  Palette : noir / doré / blanc. Les couleurs se règlent dans app/globals.css
-//  (bloc @theme) — cherche les variables --color-brand-* et --color-gold.
+//  Palette : bleu / blanc / rouge. Les couleurs se règlent dans app/globals.css
+//  (bloc @theme) — cherche les variables --color-brand-* et --color-gold
+//  (nom hérité du template, porte maintenant le rouge).
 //
-//  Générique pour l'instant — pas encore assigné à un courtier précis.
+//  Branding : Max Bacon, courtier immobilier résidentiel RE/MAX (Sainte-Julie).
 // ─────────────────────────────────────────────────────────────────────────
 
 export interface BrokerConfig {
@@ -63,13 +64,13 @@ export interface BrandConfig {
 export const BRAND: BrandConfig = {
   slug: "vente-ou-achat-maxbacon",
 
-  teamName: "Nom de l'équipe",
+  teamName: "Max Bacon",
 
-  region: "ta région",
-  city: "ta ville",
+  region: "la Montérégie",
+  city: "Sainte-Julie",
 
   hero: {
-    chip: "60 secondes · Gratuit",
+    chip: "Sainte-Julie · Montérégie",
     title: "Devrais-tu vendre avant d'acheter… ou acheter avant de vendre ?",
     subtitle:
       "Découvre en 60 secondes quelle stratégie immobilière pourrait être la plus avantageuse selon ta situation financière, ta propriété actuelle et ton prochain achat.",
@@ -81,23 +82,24 @@ export const BRAND: BrandConfig = {
 
   logos: {
     team: {
-      src: "/logo-equipe.svg",
-      alt: "Nom de l'équipe",
-      width: 750,
-      height: 194,
+      src: "/max-bacon-logo.png",
+      alt: "Max Bacon — courtier immobilier résidentiel RE/MAX",
+      width: 689,
+      height: 456,
     },
     banner: {
-      src: "/logo-banniere.svg",
-      alt: "Agence immobilière",
-      width: 900,
-      height: 300,
+      // Logo officiel RE/MAX en blanc, directement sur le fond bleu (pas de pastille).
+      src: "/remax-logo-white.png",
+      alt: "RE/MAX — Agence immobilière",
+      width: 288,
+      height: 78,
     },
   },
 
   brokers: [
     {
-      name: "Prénom Nom",
-      title: "Courtier ou courtière immobilier",
+      name: "Max Bacon",
+      title: "Courtier immobilier résidentiel · RE/MAX",
       photo: "/broker-1.svg",
       objectPosition: "50% 18%",
       phoneDisplay: "",

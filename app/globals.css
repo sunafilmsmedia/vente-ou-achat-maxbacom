@@ -10,38 +10,38 @@
   --color-ink-800: #141414;
   --color-ink-700: #1f1f1f;
 
-  /* Thème CLAIR — fond blanc / texte noir / accent doré.
-     brand-100/200 = textes foncés lisibles sur blanc ;
-     brand-300 = doré foncé (micro-libellés, icônes) lisible sur blanc ;
-     brand-400..900 = surfaces claires élevées (cartes, cercles). */
+  /* Thème SOMBRE — fond bleu / texte blanc / accent rouge (Max Bacon, RE/MAX).
+     brand-100/200 = textes blancs lisibles sur bleu ;
+     brand-300 = rouge (micro-libellés, icônes) lisible sur bleu ;
+     brand-400..900 = surfaces bleues élevées (cartes, cercles). */
   --color-brand-50: #ffffff;
-  --color-brand-100: #0a0a0a;
-  --color-brand-200: #262626;
-  --color-brand-300: #a67c00;
-  --color-brand-400: #e5e5e5;
-  --color-brand-500: #ededed;
-  --color-brand-600: #f2f2f2;
-  --color-brand-700: #f7f7f7;
-  --color-brand-800: #fafafa;
-  --color-brand-900: #ffffff;
+  --color-brand-100: #ffffff;
+  --color-brand-200: #e6ebf7;
+  --color-brand-300: #ff5a68;
+  --color-brand-400: #1c3f8f;
+  --color-brand-500: #16327a;
+  --color-brand-600: #122a68;
+  --color-brand-700: #0d2156;
+  --color-brand-800: #0a1a44;
+  --color-brand-900: #061230;
 
-  /* Doré — accent de marque (or métallique riche) */
-  --color-gold: #c79a1f;
-  --color-gold-soft: #e6c257;
+  /* Rouge — accent de marque unique (nom de variable hérité, porte le rouge) */
+  --color-gold: #dc1928;
+  --color-gold-soft: #ff4d5e;
 
-  --color-slate-accent: #c79a1f;
-  --color-slate-soft: #e6c257;
+  --color-slate-accent: #dc1928;
+  --color-slate-soft: #ff4d5e;
 
-  /* Textes secondaires — gris foncés lisibles sur fond blanc */
-  --color-slate-300: #3f3f46;
-  --color-slate-400: #52525b;
-  --color-slate-500: #71717a;
-  --color-slate-600: #a1a1aa;
+  /* Textes secondaires — bleu-gris clairs lisibles sur fond bleu */
+  --color-slate-300: #cbd5f0;
+  --color-slate-400: #a3b3dc;
+  --color-slate-500: #7e8fc0;
+  --color-slate-600: #5a6a99;
 }
 
 html, body {
-  background: radial-gradient(ellipse at 50% -5%, #fffdf5 0%, #ffffff 45%, #ffffff 100%);
-  color: #0a0a0a;
+  background: radial-gradient(ellipse at 50% -5%, #1b47ad 0%, #0c2b74 45%, #050f33 100%);
+  color: #ffffff;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -52,32 +52,32 @@ body {
   overflow-x: hidden;
 }
 
-/* Surface claire givrée (thème blanc) */
+/* Surface bleue givrée (thème sombre) */
 @utility glass-card {
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.055);
   backdrop-filter: blur(18px) saturate(120%);
   -webkit-backdrop-filter: blur(18px) saturate(120%);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow:
-    0 24px 60px -28px rgba(0, 0, 0, 0.18),
-    0 1px 0 rgba(255, 255, 255, 0.6) inset;
+    0 24px 60px -28px rgba(0, 0, 0, 0.55),
+    0 1px 0 rgba(255, 255, 255, 0.05) inset;
 }
 
 @utility glass-card-light {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border: 1px solid rgba(199, 154, 31, 0.30);
+  border: 1px solid rgba(220, 25, 40, 0.3);
   box-shadow:
-    0 30px 80px -30px rgba(0, 0, 0, 0.20),
-    0 0 0 1px rgba(0, 0, 0, 0.03) inset;
+    0 30px 80px -30px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
 }
 
 @utility text-balance {
   text-wrap: balance;
 }
 
-/* Titre d'affichage — gros bold majuscules large (branding Groupe Guillemette) */
+/* Titre d'affichage — gros bold majuscules large */
 @utility display-title {
   font-family: var(--font-display);
   font-weight: 800;
@@ -86,7 +86,7 @@ body {
   line-height: 1.02;
 }
 
-/* AI shimmer — dégradé doré lent, lisible sur fond blanc */
+/* AI shimmer — dégradé blanc/rouge, lisible sur fond bleu */
 @keyframes ai-shimmer {
   0% { background-position: 0% 50%; }
   100% { background-position: 200% 50%; }
@@ -94,12 +94,12 @@ body {
 .ai-shimmer {
   background-image: linear-gradient(
     90deg,
-    #8a6d1f 0%,
-    #c79a1f 22%,
-    #e6c257 44%,
-    #8a6d1f 62%,
-    #c79a1f 82%,
-    #8a6d1f 100%
+    #ffffff 0%,
+    #ff4d5e 22%,
+    #ffffff 44%,
+    #ff4d5e 62%,
+    #ffffff 82%,
+    #ff4d5e 100%
   );
   background-size: 200% auto;
   background-clip: text;
@@ -111,12 +111,12 @@ body {
 .ai-shimmer-fast {
   background-image: linear-gradient(
     90deg,
-    #8a6d1f 0%,
-    #c79a1f 22%,
-    #e6c257 44%,
-    #8a6d1f 62%,
-    #c79a1f 82%,
-    #8a6d1f 100%
+    #ffffff 0%,
+    #ff4d5e 22%,
+    #ffffff 44%,
+    #ff4d5e 62%,
+    #ffffff 82%,
+    #ff4d5e 100%
   );
   background-size: 200% auto;
   background-clip: text;
@@ -146,10 +146,10 @@ body {
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0, 0.18);
+  background: rgba(255,255,255, 0.18);
   border-radius: 9999px;
 }
-::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0, 0.3); }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255, 0.3); }
 
 /* Inputs sans bordures par défaut */
 input, textarea, select {

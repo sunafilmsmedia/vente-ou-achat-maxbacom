@@ -15,20 +15,18 @@ export default function TopLogos() {
         className="fixed top-4 left-4 sm:top-6 sm:left-6 z-30 pointer-events-none"
         aria-hidden
       >
-        {/* Le logo d'équipe a un texte blanc → pastille sombre pour le rendre lisible sur fond blanc */}
-        <div className="rounded-xl bg-[#0a0a0a] px-3 py-1.5 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.35)] ring-1 ring-black/5">
-          <Image
-            src={team.src}
-            alt={team.alt}
-            width={team.width}
-            height={team.height}
-            priority
-            className="h-8 sm:h-10 w-auto"
-          />
-        </div>
+        {/* Logo Max Bacon — fond noir intégré à l'image, s'intègre tel quel sur le fond bleu */}
+        <Image
+          src={team.src}
+          alt={team.alt}
+          width={team.width}
+          height={team.height}
+          priority
+          className="h-10 sm:h-12 w-auto rounded-lg shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]"
+        />
       </motion.div>
 
-      {/* Logo de l'agence — haut à droite, sur pastille blanche (logo à texte foncé) */}
+      {/* Logo RE/MAX — blanc/transparent, directement sur le fond bleu */}
       <motion.div
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
@@ -36,16 +34,14 @@ export default function TopLogos() {
         className="fixed top-4 right-4 sm:top-6 sm:right-6 z-30 pointer-events-none"
         aria-hidden
       >
-        <div className="rounded-xl bg-white px-2 py-1 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)] ring-1 ring-black/5">
-          <Image
-            src={banner.src}
-            alt={banner.alt}
-            width={banner.width}
-            height={banner.height}
-            priority
-            className="h-8 sm:h-10 w-auto"
-          />
-        </div>
+        <Image
+          src={banner.src}
+          alt={banner.alt}
+          width={banner.width}
+          height={banner.height}
+          priority
+          className="h-8 sm:h-10 w-auto"
+        />
       </motion.div>
     </>
   );

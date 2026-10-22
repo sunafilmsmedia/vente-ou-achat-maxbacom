@@ -24,9 +24,9 @@ const VERDICT_BADGE: Record<Verdict, { label: string; color: string; bg: string;
   },
   acheter_avant: {
     label: "Acheter avant de vendre",
-    color: "text-sky-500",
-    bg: "bg-sky-500/10",
-    ring: "ring-sky-500/30",
+    color: "text-white",
+    bg: "bg-white/10",
+    ring: "ring-white/30",
   },
   simultane: {
     label: "Stratégie combinée",
@@ -79,9 +79,8 @@ export default function ResultsScreen({ analyze, answers, leadResult, onRestart 
         className="
           relative overflow-hidden
           rounded-3xl p-7 sm:p-9 mt-6
-          bg-black/[0.02]
-          border border-[var(--color-slate-accent)]/25
-          shadow-[0_30px_80px_-30px_rgba(0,0,0,0.18)]
+          glass-card
+          shadow-[0_30px_80px_-30px_rgba(0,0,0,0.4)]
         "
       >
         <div className="absolute -top-24 -right-24 w-60 h-60 rounded-full bg-[var(--color-gold)]/10 blur-3xl" />
@@ -180,8 +179,8 @@ export default function ResultsScreen({ analyze, answers, leadResult, onRestart 
                 shrink-0 w-8 h-8 rounded-full
                 bg-gradient-to-br from-[var(--color-gold-soft)] to-[var(--color-gold)]
                 flex items-center justify-center
-                font-serif text-[#0a0a0a] text-sm
-                shadow-[0_6px_18px_-4px_rgba(201,162,39,0.5)]
+                font-serif text-white text-sm
+                shadow-[0_6px_18px_-4px_rgba(220,25,40,0.5)]
               ">
                 {i + 1}
               </span>
@@ -235,31 +234,30 @@ function StrategyGauge({ netScore, verdict }: { netScore: number; verdict: Verdi
       className="
         relative overflow-hidden
         rounded-3xl p-7 sm:p-9
-        bg-gradient-to-br from-[#fdfaf1] to-[#f6efda]
-        border border-[var(--color-gold)]/30
-        shadow-[0_30px_80px_-30px_rgba(0,0,0,0.20)]
+        glass-card-light
+        shadow-[0_30px_80px_-30px_rgba(0,0,0,0.5)]
       "
     >
-      <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-[var(--color-gold)]/15 blur-3xl" />
-      <div className="absolute -bottom-20 -left-20 w-60 h-60 rounded-full bg-sky-400/10 blur-3xl" />
+      <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-[var(--color-gold)]/20 blur-3xl" />
+      <div className="absolute -bottom-20 -left-20 w-60 h-60 rounded-full bg-white/10 blur-3xl" />
 
       <div className="relative">
         <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--color-brand-300)] text-center">
           Où tu te situes
         </p>
 
-        <div className="mt-6 relative h-2.5 w-full rounded-full overflow-hidden bg-gradient-to-r from-sky-300 via-[#e9ddb8] to-[var(--color-gold)]">
+        <div className="mt-6 relative h-2.5 w-full rounded-full overflow-hidden bg-gradient-to-r from-white/25 via-white/10 to-[var(--color-gold)]">
           <motion.div
             initial={{ left: "50%" }}
             animate={{ left: `${pct}%` }}
             transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-[#0a0a0a] ring-4 ring-white shadow-[0_6px_16px_-2px_rgba(0,0,0,0.4)]"
+            className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-white ring-4 ring-[var(--color-gold)]/50 shadow-[0_6px_16px_-2px_rgba(0,0,0,0.5)]"
           />
         </div>
 
         <div className="mt-3 flex items-center justify-between text-[11px] sm:text-xs font-medium">
-          <span className="text-sky-600">Acheter avant</span>
-          <span className="text-slate-500">Simultané</span>
+          <span className="text-white/75">Acheter avant</span>
+          <span className="text-slate-400">Simultané</span>
           <span className="text-[var(--color-brand-300)]">Vendre avant</span>
         </div>
 
@@ -274,7 +272,7 @@ function FactorRow({ factor }: { factor: ScoringFactor }) {
     factor.tone === "vendre"
       ? "bg-[var(--color-gold)]"
       : factor.tone === "acheter"
-      ? "bg-sky-500"
+      ? "bg-white"
       : "bg-slate-400";
   return (
     <li className="flex items-center gap-3 text-sm">
