@@ -9,7 +9,6 @@ export type QuestionId =
   | "currentPropertyValue"
   | "ownershipDuration"
   | "listingStatus"
-  | "nextSectors"
   | "preapprovalStatus"
   | "needsSaleMoney"
   | "canCarryTwoMortgages"
@@ -148,15 +147,6 @@ export const QUESTIONS: QuestionDef[] = [
 
   // ── Étape 3 — Ton prochain achat ─────────────────────────────────────────
   {
-    id: "nextSectors",
-    kind: "regions",
-    title: "Dans quel secteur aimerais-tu acheter ?",
-    subtitle: "Choisis jusqu'à 3 villes.",
-    maxRegions: 3,
-    regionsPlaceholder: "Écris un secteur (ex. Laval, Longueuil…)",
-    showIf: (a) => a.listingStatus !== "avec_courtier" || a.wantsToSwitchListing === true,
-  },
-  {
     id: "preapprovalStatus",
     kind: "choice",
     title: "As-tu déjà obtenu une préapprobation hypothécaire pour ton prochain achat ?",
@@ -283,7 +273,6 @@ export function isAnswered(q: QuestionDef, a: Answers): boolean {
       if (a.listingStatus && a.listingStatus !== "avec_courtier") return true;
       if (a.listingStatus === "avec_courtier" && a.wantsToSwitchListing === true) return true;
       return false;
-    case "nextSectors": return Array.isArray(a.nextSectors) && a.nextSectors.length >= 1;
     case "preapprovalStatus": return !!a.preapprovalStatus;
     case "needsSaleMoney": return !!a.needsSaleMoney;
     case "canCarryTwoMortgages": return !!a.canCarryTwoMortgages;

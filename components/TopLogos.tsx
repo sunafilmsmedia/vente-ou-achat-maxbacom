@@ -15,14 +15,14 @@ export default function TopLogos() {
         className="fixed top-4 left-4 sm:top-6 sm:left-6 z-30 pointer-events-none"
         aria-hidden
       >
-        {/* Logo Max Bacon — fond noir intégré à l'image, s'intègre tel quel sur le fond bleu */}
+        {/* Logo Max Bacon — fond transparent, directement sur le fond bleu */}
         <Image
           src={team.src}
           alt={team.alt}
           width={team.width}
           height={team.height}
           priority
-          className="h-10 sm:h-12 w-auto rounded-lg shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]"
+          className="h-10 sm:h-12 w-auto"
         />
       </motion.div>
 

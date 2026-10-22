@@ -62,7 +62,6 @@ export async function POST(req: Request) {
   const scoring = computeScoring(answers);
   const { firstName, lastName } = splitName(name);
   const villeActuelle = regionNames(answers.currentCity);
-  const secteursAchat = regionNames(answers.nextSectors);
   const segment = quebecSegment();
 
   // Payload aplati pour mapping GHL direct + données brutes en complément.
@@ -105,8 +104,6 @@ export async function POST(req: Request) {
     listingStatus: answers.listingStatus ?? "",
 
     // Prochain achat
-    secteursAchat: secteursAchat.join(", "),
-    secteursAchatIds: answers.nextSectors ?? [],
     preapprovalStatus: answers.preapprovalStatus ?? "",
 
     // Situation financière

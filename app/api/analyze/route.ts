@@ -75,7 +75,6 @@ export async function POST(req: Request) {
       answers: {
         ...answers,
         currentCity: regionNames(answers.currentCity),
-        nextSectors: regionNames(answers.nextSectors),
       },
       scoring,
       fallbackHints: {

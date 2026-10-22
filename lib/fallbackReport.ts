@@ -40,11 +40,6 @@ function currentCityLabel(answers: Answers): string {
   return regionNames(answers.currentCity)[0] ?? "ta ville";
 }
 
-function nextSectorsLabel(answers: Answers): string {
-  const secteurs = regionNames(answers.nextSectors);
-  return secteurs.length ? secteurs.slice(0, 3).join(", ") : "tes secteurs";
-}
-
 function propertyLabel(answers: Answers): string {
   return PROPERTY_LABEL[answers.currentPropertyType ?? "autre"] ?? "propriété";
 }
@@ -81,7 +76,7 @@ function benefitsFor(verdict: Verdict, answers: Answers): string[] {
 }
 
 function stepsFor(verdict: Verdict, answers: Answers): Report["steps"] {
-  const secteurTexte = nextSectorsLabel(answers);
+  const secteurTexte = currentCityLabel(answers);
   const valeur = VALUE_RANGE_LABEL[answers.currentPropertyValue ?? "ne_sais_pas"];
 
   switch (verdict) {
@@ -146,7 +141,7 @@ function stepsFor(verdict: Verdict, answers: Answers): Report["steps"] {
 }
 
 function marketInsightFor(answers: Answers): string {
-  const secteur = regionNames(answers.nextSectors)[0] ?? currentCityLabel(answers);
+  const secteur = currentCityLabel(answers);
   return `Dans ${secteur}, le délai de vente et le délai d'achat ne sont jamais parfaitement synchronisés. Un courtier qui gère les deux transactions en même temps peut négocier des dates de clôture flexibles, une clause de 72 heures ou un prêt relais — des outils qui réduisent le risque, peu importe la stratégie choisie.`;
 }
 

@@ -29,7 +29,6 @@ const STEP_NAMES: Record<string, string> = {
   currentPropertyValue: "valeur_propriete_actuelle",
   ownershipDuration: "anciennete_proprietaire",
   listingStatus: "statut_mise_en_vente",
-  nextSectors: "secteurs_achat",
   preapprovalStatus: "preapprobation",
   needsSaleMoney: "besoin_argent_vente",
   canCarryTwoMortgages: "capacite_deux_hypotheques",
@@ -338,16 +337,6 @@ function QuestionRenderer({ question, answers, onUpdate }: RendererProps) {
           choices={choices!}
           value={answers.listingStatus}
           onChange={(v) => onUpdate({ listingStatus: v as Answers["listingStatus"] }, !!autoAdvance)}
-        />
-      );
-    case "nextSectors":
-      return (
-        <RegionMultiSearch
-          value={answers.nextSectors}
-          max={maxRegions ?? 3}
-          placeholder={regionsPlaceholder}
-          // Plusieurs secteurs possibles : avance manuelle (bouton "Suivant").
-          onChange={(ids) => onUpdate({ nextSectors: ids }, false)}
         />
       );
     case "preapprovalStatus":

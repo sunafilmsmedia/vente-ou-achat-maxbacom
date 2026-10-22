@@ -18,14 +18,14 @@ l'équité accumulée et la priorité de la personne.
 
 ## Parcours (machine à états, un seul écran)
 
-`hero → formulaire (16 à 17 questions selon le parcours, 5 étapes) → chargement (~2 s, IA) → résultats`
+`hero → formulaire (15 à 16 questions selon le parcours, 5 étapes) → chargement (~2 s, IA) → résultats`
 
 - 5 étapes : Ton projet → Ta propriété actuelle → Ton prochain achat → Ta
   situation financière → Tes priorités, puis coordonnées (nom/courriel/tél.).
-- Auto-avance sur les choix uniques (~220 ms), avance manuelle pour les
-  secteurs multiples. Barre de progression, bouton Précédent, transitions slide.
-- Villes (ville actuelle, secteurs d'achat) = champ de recherche filtrée
-  (insensible aux accents/casse) + saisie libre, jamais de « pas trouvé ».
+- Auto-avance sur les choix (~220 ms). Barre de progression, bouton Précédent,
+  transitions slide.
+- Ville actuelle = champ de recherche filtrée (insensible aux accents/casse)
+  + saisie libre, jamais de « pas trouvé ».
 - Blocage légal si la propriété est déjà en vente **avec un courtier** —
   sauf si la personne indique vouloir changer (même logique que `vero-achat`).
 - Les coordonnées sont collectées À LA FIN du formulaire — le lead est soumis

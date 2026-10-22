@@ -104,8 +104,6 @@ export interface Answers {
   wantsToSwitchListing?: boolean;
 
   // ── Étape 3 — Ton prochain achat ────────────────────────────────────────
-  // Jusqu'à 3 secteurs.
-  nextSectors?: string[];
   preapprovalStatus?: PreapprovalStatus;
 
   // ── Étape 4 — Ta situation financière ───────────────────────────────────
