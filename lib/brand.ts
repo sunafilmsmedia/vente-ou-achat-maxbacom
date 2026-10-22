@@ -42,8 +42,12 @@ export interface BrandConfig {
     title: string;
     /** Segment exact du titre en rouge shimmer + police douce (serif italique). Optionnel. */
     titleHighlight?: string;
+    /** Quelle occurrence de `titleHighlight` styler (1 = la première). Défaut : 1. */
+    titleHighlightOccurrence?: number;
     /** Segment exact du titre en police douce rouge (serif italique). Optionnel. */
     titleSoft?: string;
+    /** Quelle occurrence de `titleSoft` styler (1 = la première). Défaut : 1. */
+    titleSoftOccurrence?: number;
     subtitle: string;
     signature: string; // "Boosté par l'IA"
     cta: string;
@@ -74,6 +78,8 @@ export const BRAND: BrandConfig = {
     title: "Vendre avant d'acheter… ou acheter avant de vendre ?",
     titleHighlight: "Vendre",
     titleSoft: "acheter",
+    // La 2e occurrence : "ou acheter avant de vendre" — pas "d'acheter" au début.
+    titleSoftOccurrence: 2,
     subtitle:
       "Découvre en 60 secondes quelle stratégie immobilière pourrait être la plus avantageuse selon ta situation.",
     signature: "Boosté par l'IA",

@@ -11,44 +11,65 @@ interface HeroProps {
 // Police douce commune aux segments mis en valeur (serif italique, casse normale).
 const SOFT = "font-serif italic font-normal normal-case tracking-normal";
 
+// Trouve l'index de la N-ième occurrence (1-indexée) de `needle` dans `haystack`.
+function findOccurrence(haystack: string, needle: string, occurrence: number): number {
+  let idx = -1;
+  for (let i = 0; i < occurrence; i++) {
+    idx = haystack.indexOf(needle, idx + 1);
+    if (idx === -1) return -1;
+  }
+  return idx;
+}
+
+interface TitleSeg {
+  text: string;
+  className: string;
+  // Quelle occurrence du mot styler, quand il revient plusieurs fois dans
+  // le titre (1 = la première, 2 = la deuxième, etc.). Défaut : 1.
+  occurrence?: number;
+}
+
 // Rend le titre en enveloppant certains segments dans une police douce :
-//  - `highlight` → or shimmer (rainbow doré)
-//  - `soft` → doré doux
-function renderTitle(title: string, highlight?: string, soft?: string) {
-  const segs = [
-    highlight ? { text: highlight, className: `${SOFT} ai-shimmer` } : null,
-    soft ? { text: soft, className: `${SOFT} text-[var(--color-gold-soft)]` } : null,
-  ].filter(Boolean) as { text: string; className: string }[];
+//  - `highlight` → rouge shimmer
+//  - `soft` → rouge doux
+// Chaque segment cible une position FIXE dans le titre d'origine (pas un
+// "reste" qui rétrécit au fil du scan) — ça permet de cibler la 2e
+// occurrence d'un mot qui revient plus loin dans la phrase sans styler la 1re.
+function renderTitle(
+  title: string,
+  highlight?: string,
+  soft?: string,
+  highlightOccurrence = 1,
+  softOccurrence = 1
+) {
+  const segs: TitleSeg[] = [
+    highlight ? { text: highlight, className: `${SOFT} ai-shimmer`, occurrence: highlightOccurrence } : null,
+    soft ? { text: soft, className: `${SOFT} text-[var(--color-gold-soft)]`, occurrence: softOccurrence } : null,
+  ].filter(Boolean) as TitleSeg[];
 
   if (segs.length === 0) return title;
 
+  const ranges: { start: number; end: number; className: string }[] = [];
+  for (const seg of segs) {
+    const start = findOccurrence(title, seg.text, seg.occurrence ?? 1);
+    if (start !== -1) ranges.push({ start, end: start + seg.text.length, className: seg.className });
+  }
+  if (ranges.length === 0) return title;
+  ranges.sort((a, b) => a.start - b.start);
+
   const nodes: ReactNode[] = [];
-  // Chaque segment n'est stylé qu'une seule fois (sa PREMIÈRE occurrence) —
-  // un mot comme "Vendre" ou "acheter" peut revenir plus loin dans le titre
-  // sans qu'on veuille le styler à nouveau.
-  const remaining = new Set(segs);
-  let rest = title;
+  let cursor = 0;
   let key = 0;
-  while (rest.length) {
-    // Trouve le prochain segment à styler (le plus proche du début).
-    let best: { idx: number; seg: (typeof segs)[number] } | null = null;
-    for (const seg of remaining) {
-      const idx = rest.indexOf(seg.text);
-      if (idx !== -1 && (best === null || idx < best.idx)) best = { idx, seg };
-    }
-    if (!best) {
-      nodes.push(rest);
-      break;
-    }
-    if (best.idx > 0) nodes.push(rest.slice(0, best.idx));
+  for (const r of ranges) {
+    if (r.start > cursor) nodes.push(title.slice(cursor, r.start));
     nodes.push(
-      <span key={key++} className={best.seg.className}>
-        {best.seg.text}
+      <span key={key++} className={r.className}>
+        {title.slice(r.start, r.end)}
       </span>
     );
-    remaining.delete(best.seg);
-    rest = rest.slice(best.idx + best.seg.text.length);
+    cursor = r.end;
   }
+  if (cursor < title.length) nodes.push(title.slice(cursor));
   return <>{nodes}</>;
 }
 
@@ -74,7 +95,7 @@ export default function Hero({ onStart }: HeroProps) {
 
         {/* Titre H1 */}
         <h1 className="display-title text-[2.1rem] sm:text-5xl lg:text-6xl text-[var(--color-brand-100)] text-balance">
-          {renderTitle(h.title, h.titleHighlight, h.titleSoft)}
+          {renderTitle(h.title, h.titleHighlight, h.titleSoft, h.titleHighlightOccurrence, h.titleSoftOccurrence)}
         </h1>
 
         {/* Sous-titre */}
