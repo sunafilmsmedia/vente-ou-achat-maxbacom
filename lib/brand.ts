@@ -40,9 +40,9 @@ export interface BrandConfig {
   hero: {
     chip: string;
     title: string;
-    /** Segment exact du titre en or shimmer + police douce (serif italique). Optionnel. */
+    /** Segment exact du titre en rouge shimmer + police douce (serif italique). Optionnel. */
     titleHighlight?: string;
-    /** Segment exact du titre en police douce dorée (serif italique). Optionnel. */
+    /** Segment exact du titre en police douce rouge (serif italique). Optionnel. */
     titleSoft?: string;
     subtitle: string;
     signature: string; // "Boosté par l'IA"
@@ -72,6 +72,8 @@ export const BRAND: BrandConfig = {
   hero: {
     chip: "Sainte-Julie · Montérégie",
     title: "Vendre avant d'acheter… ou acheter avant de vendre ?",
+    titleHighlight: "Vendre",
+    titleSoft: "acheter",
     subtitle:
       "Découvre en 60 secondes quelle stratégie immobilière pourrait être la plus avantageuse selon ta situation.",
     signature: "Boosté par l'IA",

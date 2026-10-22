@@ -23,12 +23,16 @@ function renderTitle(title: string, highlight?: string, soft?: string) {
   if (segs.length === 0) return title;
 
   const nodes: ReactNode[] = [];
+  // Chaque segment n'est stylé qu'une seule fois (sa PREMIÈRE occurrence) —
+  // un mot comme "Vendre" ou "acheter" peut revenir plus loin dans le titre
+  // sans qu'on veuille le styler à nouveau.
+  const remaining = new Set(segs);
   let rest = title;
   let key = 0;
   while (rest.length) {
     // Trouve le prochain segment à styler (le plus proche du début).
     let best: { idx: number; seg: (typeof segs)[number] } | null = null;
-    for (const seg of segs) {
+    for (const seg of remaining) {
       const idx = rest.indexOf(seg.text);
       if (idx !== -1 && (best === null || idx < best.idx)) best = { idx, seg };
     }
@@ -42,6 +46,7 @@ function renderTitle(title: string, highlight?: string, soft?: string) {
         {best.seg.text}
       </span>
     );
+    remaining.delete(best.seg);
     rest = rest.slice(best.idx + best.seg.text.length);
   }
   return <>{nodes}</>;

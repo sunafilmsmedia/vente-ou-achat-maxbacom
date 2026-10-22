@@ -121,12 +121,6 @@ export function computeScoring(answers: Answers): ScoringResult {
     case "eviter_deux_hypotheques":
       add(20, "Éviter de payer deux hypothèques est ta priorité numéro un", "vendre");
       break;
-    case "date_precise":
-      add(0, "Déménager avant une date précise — la coordination des deux transactions sera la clé", "neutre");
-      break;
-    case "reduire_stress":
-      add(6, "Réduire le stress et les imprévus — mieux vaut connaître ton budget réel avant de t'engager", "vendre");
-      break;
     case "eviter_deplacement_double":
       add(-18, "Éviter de déménager deux fois est ta priorité", "acheter");
       break;
@@ -134,11 +128,8 @@ export function computeScoring(answers: Answers): ScoringResult {
 
   // ── Équité accumulée (ancienneté de propriétaire) ─────────────────────────
   switch (answers.ownershipDuration) {
-    case "moins_1_an":
-      add(-4, "Propriétaire depuis moins d'un an — l'équité accumulée est encore limitée", "acheter");
-      break;
-    case "1_3_ans":
-      add(0, "Propriétaire depuis 1 à 3 ans", "neutre");
+    case "moins_3_ans":
+      add(-3, "Propriétaire depuis moins de 3 ans — l'équité accumulée est encore limitée", "acheter");
       break;
     case "3_5_ans":
       add(3, "Propriétaire depuis 3 à 5 ans — une équité commence à s'accumuler", "vendre");

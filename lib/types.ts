@@ -13,18 +13,13 @@ export type ReasonForChange =
   | "plus_espace"
   | "plus_petite"
   | "quartier_ville"
-  | "reduire_depenses"
-  | "qualite_vie"
-  | "changement_personnel"
   | "autre";
 
 export type MoveTimeline =
   | "asap"
-  | "0_3_mois"
-  | "3_6_mois"
+  | "0_6_mois"
   | "6_12_mois"
-  | "plus_1_an"
-  | "ne_sais_pas";
+  | "plus_tard";
 
 export type SearchStage =
   | "trouve"
@@ -36,24 +31,18 @@ export type CurrentPropertyType =
   | "maison"
   | "condo"
   | "duplex_triplex"
-  | "jumelee_rangee"
   | "autre";
 
 export type OwnershipDuration =
-  | "moins_1_an"
-  | "1_3_ans"
+  | "moins_3_ans"
   | "3_5_ans"
   | "5_10_ans"
   | "plus_10_ans";
 
 export type ValueRange =
-  | "moins_300k"
-  | "300_400k"
-  | "400_500k"
-  | "500_650k"
-  | "650_800k"
-  | "800_1m"
-  | "plus_1m"
+  | "moins_400k"
+  | "400_650k"
+  | "plus_650k"
   | "ne_sais_pas";
 
 // "avec_courtier" déclenche le blocage légal (ExistingListingBlocker), sauf
@@ -88,8 +77,6 @@ export type Priority =
   | "meilleur_prix"
   | "maison_parfaite"
   | "eviter_deux_hypotheques"
-  | "date_precise"
-  | "reduire_stress"
   | "eviter_deplacement_double";
 
 export type Region = {
