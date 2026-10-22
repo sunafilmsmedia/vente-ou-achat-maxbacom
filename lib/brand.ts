@@ -71,9 +71,9 @@ export const BRAND: BrandConfig = {
 
   hero: {
     chip: "Sainte-Julie · Montérégie",
-    title: "Devrais-tu vendre avant d'acheter… ou acheter avant de vendre ?",
+    title: "Vendre avant d'acheter… ou acheter avant de vendre ?",
     subtitle:
-      "Découvre en 60 secondes quelle stratégie immobilière pourrait être la plus avantageuse selon ta situation financière, ta propriété actuelle et ton prochain achat.",
+      "Découvre en 60 secondes quelle stratégie immobilière pourrait être la plus avantageuse selon ta situation.",
     signature: "Boosté par l'IA",
     cta: "Découvrir ma meilleure stratégie",
     ctaHint: "60 secondes — gratuit et confidentiel",

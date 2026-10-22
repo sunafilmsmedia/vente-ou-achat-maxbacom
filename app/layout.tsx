@@ -29,12 +29,12 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: `${BRAND.teamName} — Devrais-tu vendre avant d'acheter ou acheter avant de vendre ?`,
+  title: `${BRAND.teamName} — Vendre avant d'acheter ou acheter avant de vendre ?`,
   description:
-    "Découvre en 60 secondes quelle stratégie immobilière pourrait être la plus avantageuse selon ta situation financière, ta propriété actuelle et ton prochain achat.",
+    "Découvre en 60 secondes quelle stratégie immobilière pourrait être la plus avantageuse selon ta situation.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://exemple.vercel.app"),
   openGraph: {
-    title: "Devrais-tu vendre avant d'acheter… ou acheter avant de vendre ?",
+    title: "Vendre avant d'acheter… ou acheter avant de vendre ?",
     description: `Stratégie immobilière personnalisée et gratuite — ${BRAND.teamName}.`,
     locale: "fr_CA",
   },
