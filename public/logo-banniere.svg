@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300" role="img" aria-label="Logo agence (placeholder)">
+  <rect width="900" height="300" fill="none"/>
+  <g fill="#0a0a0a" font-family="Arial, sans-serif" text-anchor="middle">
+    <text x="450" y="150" font-size="70" font-weight="800" letter-spacing="2">AGENCE</text>
+    <text x="450" y="200" font-size="22" letter-spacing="5" fill="#a67c00" opacity="0.9">LOGO PLACEHOLDER</text>
+  </g>
+</svg>

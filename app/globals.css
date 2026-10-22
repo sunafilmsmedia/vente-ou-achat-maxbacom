@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-sans: "DM Sans", "Elza", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Montserrat", "Arial Black", "Helvetica Neue", sans-serif;
+
+  --color-ink-950: #000000;
+  --color-ink-900: #0a0a0a;
+  --color-ink-800: #141414;
+  --color-ink-700: #1f1f1f;
+
+  /* Thème CLAIR — fond blanc / texte noir / accent doré.
+     brand-100/200 = textes foncés lisibles sur blanc ;
+     brand-300 = doré foncé (micro-libellés, icônes) lisible sur blanc ;
+     brand-400..900 = surfaces claires élevées (cartes, cercles). */
+  --color-brand-50: #ffffff;
+  --color-brand-100: #0a0a0a;
+  --color-brand-200: #262626;
+  --color-brand-300: #a67c00;
+  --color-brand-400: #e5e5e5;
+  --color-brand-500: #ededed;
+  --color-brand-600: #f2f2f2;
+  --color-brand-700: #f7f7f7;
+  --color-brand-800: #fafafa;
+  --color-brand-900: #ffffff;
+
+  /* Doré — accent de marque (or métallique riche) */
+  --color-gold: #c79a1f;
+  --color-gold-soft: #e6c257;
+
+  --color-slate-accent: #c79a1f;
+  --color-slate-soft: #e6c257;
+
+  /* Textes secondaires — gris foncés lisibles sur fond blanc */
+  --color-slate-300: #3f3f46;
+  --color-slate-400: #52525b;
+  --color-slate-500: #71717a;
+  --color-slate-600: #a1a1aa;
+}
+
+html, body {
+  background: radial-gradient(ellipse at 50% -5%, #fffdf5 0%, #ffffff 45%, #ffffff 100%);
+  color: #0a0a0a;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Surface claire givrée (thème blanc) */
+@utility glass-card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 24px 60px -28px rgba(0, 0, 0, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.6) inset;
+}
+
+@utility glass-card-light {
+  background: #ffffff;
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(199, 154, 31, 0.30);
+  box-shadow:
+    0 30px 80px -30px rgba(0, 0, 0, 0.20),
+    0 0 0 1px rgba(0, 0, 0, 0.03) inset;
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+/* Titre d'affichage — gros bold majuscules large (branding Groupe Guillemette) */
+@utility display-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  line-height: 1.02;
+}
+
+/* AI shimmer — dégradé doré lent, lisible sur fond blanc */
+@keyframes ai-shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+.ai-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    #8a6d1f 0%,
+    #c79a1f 22%,
+    #e6c257 44%,
+    #8a6d1f 62%,
+    #c79a1f 82%,
+    #8a6d1f 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: ai-shimmer 8s linear infinite;
+}
+.ai-shimmer-fast {
+  background-image: linear-gradient(
+    90deg,
+    #8a6d1f 0%,
+    #c79a1f 22%,
+    #e6c257 44%,
+    #8a6d1f 62%,
+    #c79a1f 82%,
+    #8a6d1f 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: ai-shimmer 2.5s linear infinite;
+}
+
+/* Pulse dot */
+@keyframes soft-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+.pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: soft-pulse 1.8s ease-in-out infinite;
+  opacity: 0.5;
+}
+
+/* Scrollbar discrète */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0, 0.18);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0, 0.3); }
+
+/* Inputs sans bordures par défaut */
+input, textarea, select {
+  background: transparent;
+  outline: none;
+  border: none;
+}
+input:focus, textarea:focus, select:focus { outline: none; }
