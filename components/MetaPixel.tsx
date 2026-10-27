@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import Script from "next/script";
 import { captureFbclid } from "@/lib/attribution";
 
-// Pixel Meta — À REMPLIR AU DÉPLOIEMENT (nouvelle app = nouveau pixel). Vide = aucun script Meta injecté.
-const PIXEL_ID = "";
+// Pixel Meta — Max Bacon (vente-ou-achat-maxbacon).
+const PIXEL_ID = "1648779803500737";
 
 declare global {
   interface Window {
