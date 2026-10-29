@@ -10,8 +10,7 @@
 // Les 3 facteurs financiers (besoin de l'argent de la vente, capacité à
 // porter deux hypothèques, économies indépendantes) pèsent le plus lourd —
 // c'est ce qui détermine réellement si on PEUT acheter avant de vendre.
-// Le reste (statut de mise en vente, préapprobation, équité, priorité)
-// affine la recommandation.
+// L'équité accumulée et la priorité de la personne affinent la recommandation.
 // ============================================================================
 
 import type { Answers, ScoringFactor, ScoringResult, Verdict } from "./types";
@@ -77,36 +76,6 @@ export function computeScoring(answers: Answers): ScoringResult {
       break;
     case "prefere_ne_pas_repondre":
       add(0, "Ta situation d'épargne reste à valider avec un courtier", "neutre");
-      break;
-  }
-
-  // ── Statut de mise en vente ────────────────────────────────────────────────
-  switch (answers.listingStatus) {
-    case "avec_courtier":
-    case "par_moi_meme":
-      add(8, "Ta propriété est déjà sur le marché — la vente est déjà en mouvement", "vendre");
-      break;
-    case "prete_pas_listee":
-      add(4, "Ta propriété est prête à être mise en vente", "vendre");
-      break;
-    case "aucune_demarche":
-      add(-4, "Tu n'as encore fait aucune démarche de mise en vente", "acheter");
-      break;
-  }
-
-  // ── Préapprobation hypothécaire ───────────────────────────────────────────
-  switch (answers.preapprovalStatus) {
-    case "oui":
-      add(-12, "Tu es déjà préapprouvé — rien ne t'empêche de commencer à chercher dès maintenant", "acheter");
-      break;
-    case "en_demarche":
-      add(-4, "Ta préapprobation est en démarche", "acheter");
-      break;
-    case "non":
-      add(8, "Ton financement n'est pas encore amorcé — mieux vaut connaître le produit de ta vente avant de magasiner", "vendre");
-      break;
-    case "ne_sais_pas_besoin":
-      add(0, "La préapprobation reste à clarifier avec un courtier hypothécaire", "neutre");
       break;
   }
 

@@ -15,12 +15,6 @@ export type ReasonForChange =
   | "quartier_ville"
   | "autre";
 
-export type MoveTimeline =
-  | "asap"
-  | "0_6_mois"
-  | "6_12_mois"
-  | "plus_tard";
-
 export type SearchStage =
   | "trouve"
   | "visite"
@@ -44,20 +38,6 @@ export type ValueRange =
   | "400_650k"
   | "plus_650k"
   | "ne_sais_pas";
-
-// "avec_courtier" déclenche le blocage légal (ExistingListingBlocker), sauf
-// si la personne indique vouloir changer (wantsToSwitchListing = true).
-export type ListingStatus =
-  | "avec_courtier"
-  | "par_moi_meme"
-  | "prete_pas_listee"
-  | "aucune_demarche";
-
-export type PreapprovalStatus =
-  | "oui"
-  | "non"
-  | "en_demarche"
-  | "ne_sais_pas_besoin";
 
 export type NeedsSaleMoney =
   | "oui_absolument"
@@ -89,7 +69,6 @@ export type Region = {
 export interface Answers {
   // ── Étape 1 — Ton projet ───────────────────────────────────────────────
   reasonForChange?: ReasonForChange;
-  moveTimeline?: MoveTimeline;
   searchStage?: SearchStage;
 
   // ── Étape 2 — Ta propriété actuelle ─────────────────────────────────────
@@ -98,13 +77,6 @@ export interface Answers {
   currentCity?: string[];
   currentPropertyValue?: ValueRange;
   ownershipDuration?: OwnershipDuration;
-  listingStatus?: ListingStatus;
-  // Débloque le formulaire quand listingStatus="avec_courtier" : la personne
-  // n'est pas satisfaite de son courtier actuel et veut explorer un changement.
-  wantsToSwitchListing?: boolean;
-
-  // ── Étape 3 — Ton prochain achat ────────────────────────────────────────
-  preapprovalStatus?: PreapprovalStatus;
 
   // ── Étape 4 — Ta situation financière ───────────────────────────────────
   needsSaleMoney?: NeedsSaleMoney;

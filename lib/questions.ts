@@ -2,14 +2,11 @@ import type { Answers } from "./types";
 
 export type QuestionId =
   | "reasonForChange"
-  | "moveTimeline"
   | "searchStage"
   | "currentPropertyType"
   | "currentCity"
   | "currentPropertyValue"
   | "ownershipDuration"
-  | "listingStatus"
-  | "preapprovalStatus"
   | "needsSaleMoney"
   | "canCarryTwoMortgages"
   | "hasSavings"
@@ -57,19 +54,6 @@ export const QUESTIONS: QuestionDef[] = [
       { value: "plus_petite", label: "Je souhaite une propriété plus petite" },
       { value: "quartier_ville", label: "Je veux changer de quartier ou de ville" },
       { value: "autre", label: "Autre raison", hint: "Qualité de vie, dépenses, changement personnel…" },
-    ],
-  },
-  {
-    id: "moveTimeline",
-    kind: "choice",
-    title: "Dans combien de temps aimerais-tu avoir déménagé ?",
-    subtitle: "Ton meilleur estimé, sans pression.",
-    autoAdvance: true,
-    choices: [
-      { value: "asap", label: "Le plus rapidement possible" },
-      { value: "0_6_mois", label: "Dans les 6 prochains mois" },
-      { value: "6_12_mois", label: "Dans 6 à 12 mois" },
-      { value: "plus_tard", label: "Dans plus d'un an, ou je ne sais pas encore" },
     ],
   },
   {
@@ -132,35 +116,8 @@ export const QUESTIONS: QuestionDef[] = [
       { value: "plus_10_ans", label: "Plus de 10 ans" },
     ],
   },
-  {
-    id: "listingStatus",
-    kind: "choice",
-    title: "Ta propriété est-elle actuellement en vente ?",
-    autoAdvance: true,
-    choices: [
-      { value: "avec_courtier", label: "Oui, avec un courtier immobilier" },
-      { value: "par_moi_meme", label: "Oui, par moi-même" },
-      { value: "prete_pas_listee", label: "Non, mais elle est prête à être mise en vente" },
-      { value: "aucune_demarche", label: "Non, je n'ai encore fait aucune démarche" },
-    ],
-  },
 
-  // ── Étape 3 — Ton prochain achat ─────────────────────────────────────────
-  {
-    id: "preapprovalStatus",
-    kind: "choice",
-    title: "As-tu déjà obtenu une préapprobation hypothécaire pour ton prochain achat ?",
-    autoAdvance: true,
-    choices: [
-      { value: "oui", label: "Oui" },
-      { value: "non", label: "Non" },
-      { value: "en_demarche", label: "Je suis en démarche" },
-      { value: "ne_sais_pas_besoin", label: "Je ne sais pas si j'en ai besoin" },
-    ],
-    showIf: (a) => a.listingStatus !== "avec_courtier" || a.wantsToSwitchListing === true,
-  },
-
-  // ── Étape 4 — Ta situation financière ────────────────────────────────────
+  // ── Étape 3 — Ta situation financière ────────────────────────────────────
   {
     id: "needsSaleMoney",
     kind: "choice",
@@ -172,7 +129,6 @@ export const QUESTIONS: QuestionDef[] = [
       { value: "non_assez_economies", label: "Non, j'ai suffisamment d'économies" },
       { value: "ne_sais_pas", label: "Je ne sais pas encore" },
     ],
-    showIf: (a) => a.listingStatus !== "avec_courtier" || a.wantsToSwitchListing === true,
   },
   {
     id: "canCarryTwoMortgages",
@@ -188,9 +144,7 @@ export const QUESTIONS: QuestionDef[] = [
     // Si la personne a déjà dit avoir ABSOLUMENT besoin de l'argent de la
     // vente pour acheter, elle ne peut par définition pas porter deux
     // propriétés — la question devient inutile.
-    showIf: (a) =>
-      (a.listingStatus !== "avec_courtier" || a.wantsToSwitchListing === true) &&
-      a.needsSaleMoney !== "oui_absolument",
+    showIf: (a) => a.needsSaleMoney !== "oui_absolument",
   },
   {
     id: "hasSavings",
@@ -202,10 +156,9 @@ export const QUESTIONS: QuestionDef[] = [
       { value: "non", label: "Non" },
       { value: "prefere_ne_pas_repondre", label: "Je préfère ne pas répondre" },
     ],
-    showIf: (a) => a.listingStatus !== "avec_courtier" || a.wantsToSwitchListing === true,
   },
 
-  // ── Étape 5 — Tes priorités ──────────────────────────────────────────────
+  // ── Étape 4 — Tes priorités ──────────────────────────────────────────────
   {
     id: "priority",
     kind: "choice",
@@ -217,7 +170,6 @@ export const QUESTIONS: QuestionDef[] = [
       { value: "eviter_deux_hypotheques", label: "Éviter de payer deux hypothèques" },
       { value: "eviter_deplacement_double", label: "Éviter de devoir déménager deux fois" },
     ],
-    showIf: (a) => a.listingStatus !== "avec_courtier" || a.wantsToSwitchListing === true,
   },
 
   // ── Coordonnées ───────────────────────────────────────────────────────────
@@ -229,7 +181,6 @@ export const QUESTIONS: QuestionDef[] = [
     inputType: "text",
     autoComplete: "name",
     placeholder: "Marie Tremblay",
-    showIf: (a) => a.listingStatus !== "avec_courtier" || a.wantsToSwitchListing === true,
   },
   {
     id: "email",
@@ -239,7 +190,6 @@ export const QUESTIONS: QuestionDef[] = [
     inputType: "email",
     autoComplete: "email",
     placeholder: "marie@exemple.ca",
-    showIf: (a) => a.listingStatus !== "avec_courtier" || a.wantsToSwitchListing === true,
   },
   {
     id: "phone",
@@ -249,7 +199,6 @@ export const QUESTIONS: QuestionDef[] = [
     inputType: "tel",
     autoComplete: "tel",
     placeholder: "(514) 555-0123",
-    showIf: (a) => a.listingStatus !== "avec_courtier" || a.wantsToSwitchListing === true,
   },
 ];
 
@@ -260,20 +209,11 @@ export function getVisibleQuestions(answers: Answers): QuestionDef[] {
 export function isAnswered(q: QuestionDef, a: Answers): boolean {
   switch (q.id) {
     case "reasonForChange": return !!a.reasonForChange;
-    case "moveTimeline": return !!a.moveTimeline;
     case "searchStage": return !!a.searchStage;
     case "currentPropertyType": return !!a.currentPropertyType;
     case "currentCity": return Array.isArray(a.currentCity) && a.currentCity.length >= 1;
     case "currentPropertyValue": return !!a.currentPropertyValue;
     case "ownershipDuration": return !!a.ownershipDuration;
-    case "listingStatus":
-      // Tous les statuts sauf "avec_courtier" permettent de continuer direct.
-      // "avec_courtier" est bloqué SAUF si la personne clique "Je veux
-      // changer" (wantsToSwitchListing = true).
-      if (a.listingStatus && a.listingStatus !== "avec_courtier") return true;
-      if (a.listingStatus === "avec_courtier" && a.wantsToSwitchListing === true) return true;
-      return false;
-    case "preapprovalStatus": return !!a.preapprovalStatus;
     case "needsSaleMoney": return !!a.needsSaleMoney;
     case "canCarryTwoMortgages": return !!a.canCarryTwoMortgages;
     case "hasSavings": return !!a.hasSavings;

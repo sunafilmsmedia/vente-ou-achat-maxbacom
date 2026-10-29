@@ -93,7 +93,6 @@ export async function POST(req: Request) {
 
     // Projet
     reasonForChange: answers.reasonForChange ?? "",
-    moveTimeline: answers.moveTimeline ?? "",
     searchStage: answers.searchStage ?? "",
 
     // Propriété actuelle
@@ -101,10 +100,6 @@ export async function POST(req: Request) {
     villeActuelle: villeActuelle.join(", "),
     currentPropertyValue: answers.currentPropertyValue ?? "",
     ownershipDuration: answers.ownershipDuration ?? "",
-    listingStatus: answers.listingStatus ?? "",
-
-    // Prochain achat
-    preapprovalStatus: answers.preapprovalStatus ?? "",
 
     // Situation financière
     needsSaleMoney: answers.needsSaleMoney ?? "",

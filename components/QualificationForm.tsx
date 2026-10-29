@@ -9,7 +9,6 @@ import type { Answers } from "@/lib/types";
 import ProgressBar from "./ProgressBar";
 import ChoiceQuestion from "./questions/ChoiceQuestion";
 import RegionMultiSearch from "./questions/RegionMultiSearch";
-import ExistingListingBlocker from "./questions/ExistingListingBlocker";
 import TextQuestion from "./questions/TextQuestion";
 
 interface Props {
@@ -22,14 +21,11 @@ const AUTO_ADVANCE_MS = 220;
 // Libellés d'étape (Clarity Scanner).
 const STEP_NAMES: Record<string, string> = {
   reasonForChange: "raison_changement",
-  moveTimeline: "echeancier_demenagement",
   searchStage: "etape_recherche",
   currentPropertyType: "type_propriete_actuelle",
   currentCity: "ville_actuelle",
   currentPropertyValue: "valeur_propriete_actuelle",
   ownershipDuration: "anciennete_proprietaire",
-  listingStatus: "statut_mise_en_vente",
-  preapprovalStatus: "preapprobation",
   needsSaleMoney: "besoin_argent_vente",
   canCarryTwoMortgages: "capacite_deux_hypotheques",
   hasSavings: "economies",
@@ -43,13 +39,10 @@ const STEP_NAMES: Record<string, string> = {
 // fullName/email/phone (PII) : seul le nom de l'étape est suivi pour eux.
 const CHOICE_FIELDS = new Set([
   "reasonForChange",
-  "moveTimeline",
   "searchStage",
   "currentPropertyType",
   "currentPropertyValue",
   "ownershipDuration",
-  "listingStatus",
-  "preapprovalStatus",
   "needsSaleMoney",
   "canCarryTwoMortgages",
   "hasSavings",
@@ -75,13 +68,6 @@ export default function QualificationForm({ onComplete, onExit }: Props) {
   const isLast = index >= visible.length - 1;
   const canProceed = current ? isAnswered(current, answers) : false;
 
-  // Le blocker "propriété déjà en vente avec un courtier" remplace la
-  // question pour ce step.
-  const isBlocked =
-    current?.id === "listingStatus" &&
-    answers.listingStatus === "avec_courtier" &&
-    answers.wantsToSwitchListing !== true;
-
   const submit = useCallback(() => {
     if (autoAdvanceTimer.current) clearTimeout(autoAdvanceTimer.current);
     onComplete(answers);
@@ -105,22 +91,10 @@ export default function QualificationForm({ onComplete, onExit }: Props) {
 
   const updateAndMaybeAdvance = useCallback(
     (partial: Partial<Answers>, autoAdvance: boolean, delayMs: number = AUTO_ADVANCE_MS) => {
-      // Calculé de façon synchrone (pas via le updater de setAnswers, dont
-      // l'exécution est différée par React) : la logique ci-dessous doit
-      // pouvoir lire la réponse qu'on vient de donner immédiatement.
       const nextAnswers: Answers = { ...answers, ...partial };
-      // Réinitialiser wantsToSwitchListing si on change la réponse à listingStatus.
-      if ("listingStatus" in partial && partial.listingStatus !== "avec_courtier") {
-        delete nextAnswers.wantsToSwitchListing;
-      }
       setAnswers(nextAnswers);
 
-      // Bloque l'auto-advance quand listingStatus="avec_courtier" sans
-      // wantsToSwitchListing : ExistingListingBlocker prend le relais.
-      const wouldBeBlocked =
-        nextAnswers.listingStatus === "avec_courtier" && nextAnswers.wantsToSwitchListing !== true;
-
-      if (autoAdvance && !wouldBeBlocked) {
+      if (autoAdvance) {
         trackAnswer(partial);
         if (autoAdvanceTimer.current) clearTimeout(autoAdvanceTimer.current);
         autoAdvanceTimer.current = setTimeout(() => {
@@ -172,16 +146,14 @@ export default function QualificationForm({ onComplete, onExit }: Props) {
             exit={{ opacity: 0, x: direction * -60 }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
           >
-            {!isBlocked && (
-              <div className="mb-7 sm:mb-9">
-                <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[var(--color-brand-100)] leading-tight tracking-tight text-balance">
-                  {current.title}
-                </h2>
-                {current.subtitle && (
-                  <p className="mt-2.5 text-sm sm:text-base text-slate-400">{current.subtitle}</p>
-                )}
-              </div>
-            )}
+            <div className="mb-7 sm:mb-9">
+              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[var(--color-brand-100)] leading-tight tracking-tight text-balance">
+                {current.title}
+              </h2>
+              {current.subtitle && (
+                <p className="mt-2.5 text-sm sm:text-base text-slate-400">{current.subtitle}</p>
+              )}
+            </div>
 
             <QuestionRenderer question={current} answers={answers} onUpdate={updateAndMaybeAdvance} />
           </motion.div>
@@ -271,14 +243,6 @@ function QuestionRenderer({ question, answers, onUpdate }: RendererProps) {
           onChange={(v) => onUpdate({ reasonForChange: v as Answers["reasonForChange"] }, !!autoAdvance)}
         />
       );
-    case "moveTimeline":
-      return (
-        <ChoiceQuestion
-          choices={choices!}
-          value={answers.moveTimeline}
-          onChange={(v) => onUpdate({ moveTimeline: v as Answers["moveTimeline"] }, !!autoAdvance)}
-        />
-      );
     case "searchStage":
       return (
         <ChoiceQuestion
@@ -319,32 +283,6 @@ function QuestionRenderer({ question, answers, onUpdate }: RendererProps) {
           choices={choices!}
           value={answers.ownershipDuration}
           onChange={(v) => onUpdate({ ownershipDuration: v as Answers["ownershipDuration"] }, !!autoAdvance)}
-        />
-      );
-    case "listingStatus":
-      // Quand listingStatus="avec_courtier" sans wantsToSwitchListing, on
-      // remplace la question par le blocker légal.
-      if (answers.listingStatus === "avec_courtier" && answers.wantsToSwitchListing !== true) {
-        return (
-          <ExistingListingBlocker
-            onWantsToSwitch={() => onUpdate({ wantsToSwitchListing: true }, true)}
-            onCancel={() => onUpdate({ listingStatus: undefined, wantsToSwitchListing: undefined }, false)}
-          />
-        );
-      }
-      return (
-        <ChoiceQuestion
-          choices={choices!}
-          value={answers.listingStatus}
-          onChange={(v) => onUpdate({ listingStatus: v as Answers["listingStatus"] }, !!autoAdvance)}
-        />
-      );
-    case "preapprovalStatus":
-      return (
-        <ChoiceQuestion
-          choices={choices!}
-          value={answers.preapprovalStatus}
-          onChange={(v) => onUpdate({ preapprovalStatus: v as Answers["preapprovalStatus"] }, !!autoAdvance)}
         />
       );
     case "needsSaleMoney":
