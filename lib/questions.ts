@@ -146,17 +146,6 @@ export const QUESTIONS: QuestionDef[] = [
     // propriétés — la question devient inutile.
     showIf: (a) => a.needsSaleMoney !== "oui_absolument",
   },
-  {
-    id: "hasSavings",
-    kind: "choice",
-    title: "As-tu des économies disponibles pour ton prochain achat, indépendamment de la vente de ta propriété actuelle ?",
-    autoAdvance: true,
-    choices: [
-      { value: "oui", label: "Oui" },
-      { value: "non", label: "Non" },
-      { value: "prefere_ne_pas_repondre", label: "Je préfère ne pas répondre" },
-    ],
-  },
 
   // ── Étape 4 — Tes priorités ──────────────────────────────────────────────
   {
