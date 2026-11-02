@@ -12,20 +12,21 @@ import type { Region } from "./types";
 //  Aucune coordonnée (lat/lng) n'est requise : seul `name` est affiché.
 // ─────────────────────────────────────────────────────────────────────────
 export const REGIONS: Region[] = [
-  // ── Sainte-Julie et ses secteurs ──────────────────────────────────────
+  // ── Secteurs mis de l'avant (affichés en premier, dans cet ordre) ──────
   { id: "sainte-julie", name: "Sainte-Julie" },
+  { id: "varennes", name: "Varennes" },
+  { id: "boucherville", name: "Boucherville" },
+  { id: "saint-bruno-de-montarville", name: "Saint-Bruno-de-Montarville" },
+  { id: "saint-amable", name: "Saint-Amable" },
+  { id: "saint-basile-le-grand", name: "Saint-Basile-le-Grand" },
   { id: "sainte-julie-vieux-village", name: "Vieux-Village (Sainte-Julie)" },
 
   // ── MRC Marguerite-D'Youville ──────────────────────────────────────────
-  { id: "varennes", name: "Varennes" },
   { id: "vercheres", name: "Verchères" },
-  { id: "saint-amable", name: "Saint-Amable" },
   { id: "calixa-lavallee", name: "Calixa-Lavallée" },
   { id: "contrecoeur", name: "Contrecœur" },
 
   // ── Agglomération de Longueuil ──────────────────────────────────────────
-  { id: "boucherville", name: "Boucherville" },
-  { id: "saint-bruno-de-montarville", name: "Saint-Bruno-de-Montarville" },
   { id: "longueuil", name: "Longueuil" },
   { id: "saint-hubert", name: "Saint-Hubert" },
   { id: "brossard", name: "Brossard" },
@@ -35,7 +36,6 @@ export const REGIONS: Region[] = [
   { id: "beloeil", name: "Beloeil" },
   { id: "mcmasterville", name: "McMasterville" },
   { id: "otterburn-park", name: "Otterburn Park" },
-  { id: "saint-basile-le-grand", name: "Saint-Basile-le-Grand" },
   { id: "chambly", name: "Chambly" },
   { id: "carignan", name: "Carignan" },
   { id: "mont-saint-hilaire", name: "Mont-Saint-Hilaire" },

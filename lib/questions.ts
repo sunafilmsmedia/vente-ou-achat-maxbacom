@@ -89,7 +89,7 @@ export const QUESTIONS: QuestionDef[] = [
     subtitle: "Choisis-la dans la liste — ou écris-la.",
     autoAdvance: true,
     maxRegions: 1,
-    regionsPlaceholder: "Écris une ville (ex. Montréal, Québec…)",
+    regionsPlaceholder: "Écris une ville (ex. Sainte-Julie, Varennes…)",
   },
   {
     id: "currentPropertyValue",
