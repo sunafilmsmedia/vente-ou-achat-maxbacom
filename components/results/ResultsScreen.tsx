@@ -1,19 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { brokersInlineNames } from "@/lib/brand";
 import type { AnalyzeResponse, Answers, ScoringFactor, Verdict } from "@/lib/types";
-import type { LeadResult } from "@/app/page";
 import CoordinationBlock from "./CoordinationBlock";
+import ContactForm from "./ContactForm";
 
 interface Props {
   analyze: AnalyzeResponse;
   answers: Answers;
-  // Coordonnées déjà collectées dans le questionnaire et lead déjà soumis au
-  // CRM avant même d'arriver sur cet écran — null si la soumission a échoué.
-  leadResult: LeadResult | null;
   onRestart: () => void;
 }
+
+type SubmissionState =
+  | { kind: "pending" }
+  | { kind: "done"; stored: boolean; firstName: string };
 
 const VERDICT_BADGE: Record<Verdict, { label: string; color: string; bg: string; ring: string }> = {
   vendre_avant: {
@@ -36,9 +38,59 @@ const VERDICT_BADGE: Record<Verdict, { label: string; color: string; bg: string;
   },
 };
 
-export default function ResultsScreen({ analyze, answers, leadResult, onRestart }: Props) {
+export default function ResultsScreen({ analyze, answers, onRestart }: Props) {
   const { scoring, report } = analyze;
   const badge = VERDICT_BADGE[scoring.verdict];
+  const [submission, setSubmission] = useState<SubmissionState>({ kind: "pending" });
+
+  // Tant que les coordonnées ne sont pas soumises, tout le contenu reste
+  // bloqué derrière le ContactForm — le verdict n'est pas visible.
+  if (submission.kind === "pending") {
+    return (
+      <div className="min-h-screen px-5 sm:px-8 py-12 sm:py-16 max-w-xl mx-auto w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center"
+        >
+          {/* Icône cadenas avec halo */}
+          <div className="relative mx-auto mb-7 w-16 h-16">
+            <div className="absolute inset-0 rounded-full bg-[var(--color-gold)]/20 blur-xl" />
+            <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-[var(--color-brand-500)] to-[var(--color-brand-700)] border border-white/10 flex items-center justify-center shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]">
+              <svg className="w-7 h-7 text-white" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <rect x="4" y="9" width="12" height="9" rx="2" />
+                <path d="M7 9V6.5C7 4.8 8.3 3.5 10 3.5C11.7 3.5 13 4.8 13 6.5V9" />
+              </svg>
+            </div>
+          </div>
+          <p className="text-[11px] uppercase tracking-[0.25em] text-[var(--color-brand-300)] mb-3">
+            Stratégie complète disponible
+          </p>
+          <h1 className="display-title text-[1.9rem] sm:text-5xl text-[var(--color-brand-100)] text-balance">
+            Ta stratégie est prête.
+          </h1>
+        </motion.div>
+
+        <div className="mt-10">
+          <ContactForm
+            answers={answers}
+            verdict={scoring.verdict}
+            onSubmitted={(r) => setSubmission({ kind: "done", ...r })}
+          />
+        </div>
+
+        <div className="mt-10 text-center">
+          <button
+            onClick={onRestart}
+            className="text-xs text-slate-500 hover:text-[var(--color-brand-200)] transition-colors"
+          >
+            Retour à l&apos;accueil
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen px-5 sm:px-8 py-10 sm:py-14 max-w-3xl mx-auto w-full">
@@ -109,8 +161,8 @@ export default function ResultsScreen({ analyze, answers, leadResult, onRestart 
         </div>
       </motion.div>
 
-      {/* Confirmation — lead déjà soumis au CRM avant ce calcul IA */}
-      <ConfirmationBlock stored={leadResult?.stored ?? false} firstName={leadResult?.firstName ?? ""} />
+      {/* Confirmation — coordonnées soumises juste avant d'afficher la stratégie */}
+      <ConfirmationBlock stored={submission.stored} firstName={submission.firstName} />
 
       {/* Outils pour coordonner la vente et l'achat */}
       <CoordinationBlock />

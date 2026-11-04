@@ -9,7 +9,6 @@ import type { Answers } from "@/lib/types";
 import ProgressBar from "./ProgressBar";
 import ChoiceQuestion from "./questions/ChoiceQuestion";
 import RegionMultiSearch from "./questions/RegionMultiSearch";
-import TextQuestion from "./questions/TextQuestion";
 
 interface Props {
   onComplete: (answers: Answers) => void;
@@ -30,13 +29,9 @@ const STEP_NAMES: Record<string, string> = {
   canCarryTwoMortgages: "capacite_deux_hypotheques",
   hasSavings: "economies",
   priority: "priorite",
-  fullName: "nom",
-  email: "courriel",
-  phone: "telephone",
 };
 
-// Champs dont la valeur est un choix prédéfini → sûr à transmettre. Jamais
-// fullName/email/phone (PII) : seul le nom de l'étape est suivi pour eux.
+// Champs dont la valeur est un choix prédéfini → sûr à transmettre.
 const CHOICE_FIELDS = new Set([
   "reasonForChange",
   "searchStage",
@@ -232,7 +227,7 @@ interface RendererProps {
 }
 
 function QuestionRenderer({ question, answers, onUpdate }: RendererProps) {
-  const { id, choices, autoAdvance, inputType, placeholder, autoComplete, helper, maxRegions, regionsPlaceholder } = question;
+  const { id, choices, autoAdvance, maxRegions, regionsPlaceholder } = question;
 
   switch (id) {
     case "reasonForChange":
@@ -315,37 +310,6 @@ function QuestionRenderer({ question, answers, onUpdate }: RendererProps) {
           choices={choices!}
           value={answers.priority}
           onChange={(v) => onUpdate({ priority: v as Answers["priority"] }, !!autoAdvance)}
-        />
-      );
-    case "fullName":
-      return (
-        <TextQuestion
-          value={answers.fullName}
-          onChange={(v) => onUpdate({ fullName: v }, false)}
-          type={inputType}
-          autoComplete={autoComplete}
-          placeholder={placeholder}
-        />
-      );
-    case "email":
-      return (
-        <TextQuestion
-          value={answers.email}
-          onChange={(v) => onUpdate({ email: v }, false)}
-          type={inputType}
-          autoComplete={autoComplete}
-          placeholder={placeholder}
-        />
-      );
-    case "phone":
-      return (
-        <TextQuestion
-          value={answers.phone}
-          onChange={(v) => onUpdate({ phone: v }, false)}
-          type={inputType}
-          autoComplete={autoComplete}
-          placeholder={placeholder}
-          helper={helper}
         />
       );
     default:

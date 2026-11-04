@@ -7,67 +7,19 @@ import HeroBackground from "@/components/HeroBackground";
 import TopLogos from "@/components/TopLogos";
 import QualificationForm from "@/components/QualificationForm";
 import LoadingScreen from "@/components/LoadingScreen";
+import PreRevealScreen from "@/components/PreRevealScreen";
 import ResultsScreen from "@/components/results/ResultsScreen";
 import { trackStep } from "@/lib/track";
-import { getFbclid } from "@/lib/attribution";
-import { trackLeadWithMatching } from "@/components/MetaPixel";
 import type { AnalyzeResponse, Answers } from "@/lib/types";
 
-type Stage = "hero" | "form" | "loading" | "results";
+type Stage = "hero" | "form" | "loading" | "preReveal" | "results";
 
 const MIN_LOADING_MS = 2000;
-
-export type LeadResult = { stored: boolean; firstName: string };
-
-// Soumet le lead au webhook CRM dès la fin du questionnaire (les coordonnées
-// en font désormais partie) — en parallèle du calcul IA, pas après coup.
-async function submitLead(answers: Answers): Promise<LeadResult | null> {
-  const name = (answers.fullName ?? "").trim();
-  const email = (answers.email ?? "").trim();
-  const phone = (answers.phone ?? "").trim();
-  if (!name || !email) return null;
-
-  const [firstNameRaw, ...lastParts] = name.split(/\s+/);
-  try {
-    const res = await fetch("/api/lead", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        email,
-        phone: phone || undefined,
-        consent: true,
-        answers,
-        leadType: "vente_achat",
-        fbclid: getFbclid(),
-      }),
-    });
-    const data = await res.json();
-
-    trackLeadWithMatching(
-      {
-        email,
-        phone: phone || undefined,
-        firstName: firstNameRaw,
-        lastName: lastParts.join(" ") || undefined,
-      },
-      {
-        content_category: "real_estate_sell_or_buy_first",
-        verdict: data.verdict,
-      }
-    );
-    trackStep("soumis");
-    return { stored: !!data.stored, firstName: firstNameRaw };
-  } catch {
-    return null;
-  }
-}
 
 export default function Home() {
   const [stage, setStage] = useState<Stage>("hero");
   const [answers, setAnswers] = useState<Answers | null>(null);
   const [analyze, setAnalyze] = useState<AnalyzeResponse | null>(null);
-  const [leadResult, setLeadResult] = useState<LeadResult | null>(null);
 
   const handleFormComplete = async (finalAnswers: Answers) => {
     trackStep("decouvrir_strategie");
@@ -77,20 +29,15 @@ export default function Home() {
 
     const startedAt = performance.now();
     let result: AnalyzeResponse | null = null;
-    let lead: LeadResult | null = null;
     try {
-      const [analyzeSettled, leadSettled] = await Promise.allSettled([
-        fetch("/api/analyze", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ answers: finalAnswers }),
-        }).then((res) => (res.ok ? (res.json() as Promise<AnalyzeResponse>) : null)),
-        submitLead(finalAnswers),
-      ]);
-      if (analyzeSettled.status === "fulfilled") result = analyzeSettled.value;
-      if (leadSettled.status === "fulfilled") lead = leadSettled.value;
+      const res = await fetch("/api/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ answers: finalAnswers }),
+      });
+      if (res.ok) result = (await res.json()) as AnalyzeResponse;
     } catch {
-      // result/lead restent null
+      // result reste null
     }
 
     const elapsed = performance.now() - startedAt;
@@ -98,9 +45,9 @@ export default function Home() {
     setTimeout(() => {
       if (result) {
         setAnalyze(result);
-        setLeadResult(lead);
-        trackStep("resultats", result.scoring.verdict);
-        setStage("results");
+        // Écran « Ta réponse est prête », puis coordonnées avant la stratégie
+        trackStep("pre_reveal");
+        setStage("preReveal");
         if (typeof window !== "undefined") window.scrollTo(0, 0);
       } else {
         setStage("form");
@@ -108,15 +55,20 @@ export default function Home() {
     }, remaining);
   };
 
+  const revealResults = () => {
+    trackStep("resultats");
+    setStage("results");
+    if (typeof window !== "undefined") window.scrollTo(0, 0);
+  };
+
   const restart = () => {
     setAnswers(null);
     setAnalyze(null);
-    setLeadResult(null);
     setStage("hero");
     if (typeof window !== "undefined") window.scrollTo(0, 0);
   };
 
-  const showChrome = stage === "hero" || stage === "results";
+  const showChrome = stage === "hero" || stage === "preReveal" || stage === "results";
 
   return (
     <main className="relative min-h-screen overflow-hidden">
@@ -155,9 +107,14 @@ export default function Home() {
             <LoadingScreen />
           </motion.div>
         )}
+        {stage === "preReveal" && analyze && (
+          <motion.div key="preReveal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
+            <PreRevealScreen onContinue={revealResults} />
+          </motion.div>
+        )}
         {stage === "results" && analyze && answers && (
           <motion.div key="results" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <ResultsScreen analyze={analyze} answers={answers} leadResult={leadResult} onRestart={restart} />
+            <ResultsScreen analyze={analyze} answers={answers} onRestart={restart} />
           </motion.div>
         )}
       </AnimatePresence>

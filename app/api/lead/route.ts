@@ -60,7 +60,10 @@ export async function POST(req: Request) {
   }
 
   const scoring = computeScoring(answers);
-  const { firstName, lastName } = splitName(name);
+  // Prénom/nom saisis séparément (ContactForm) ; sinon on découpe le nom complet.
+  const { firstName, lastName } = body.firstName?.trim()
+    ? { firstName: body.firstName.trim(), lastName: body.lastName?.trim() ?? "" }
+    : splitName(name);
   const villeActuelle = regionNames(answers.currentCity);
   const segment = quebecSegment();
 
